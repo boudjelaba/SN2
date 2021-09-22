@@ -1,0 +1,13 @@
+* 8 bit ADC behavorial subcircuit
+.subckt ADC8 VIN VREF N q7 q6 q5 q4 q3 q2 q1 q0
+*B1 N 0 V=int(V(VIN)/V(VREF)*256)
+B1 N 0 V=limit(0, int((V(VIN)+0.5)/V(VREF)*16), 15)
+Bbit0 q0 0 V=if( (V(N)-2*int(V(N)/2+1e-6))>0.5,1,0)
+Bbit1 q1 0 V=if( (V(N)-4*int(V(N)/4+1e-6))>1.5,1,0)
+Bbit2 q2 0 V=if( (V(N)-8*int(V(N)/8+1e-6))>3.5,1,0)
+Bbit3 q3 0 V=if( (V(N)-16*int(V(N)/16+1e-6))>7.5,1,0)
+Bbit4 q4 0 V=if( (V(N)-32*int(V(N)/32+1e-6))>15.5,1,0)
+Bbit5 q5 0 V=if( (V(N)-64*int(V(N)/64+1e-6))>31.5,1,0)
+Bbit6 q6 0 V=if( (V(N)-128*int(V(N)/128+1e-6))>63.5,1,0)
+Bbit7 q7 0 V=if( (V(N)-256*int(V(N)/256+1e-6))>127.5,1,0)
+.ends

@@ -1,0 +1,33 @@
+* 8 bit ADC behavorial subcircuit
+.subckt ADC8 VIN VREF q0 q1 q2 q3 q4 q5 q6 q7 N
+*B1 N 0 V=int(V(VIN)/V(VREF)*256)
+B1 N 0 V=limit(0, int((V(VIN))/V(VREF)*256), 255)
+Bbit0 q0 0 V=if( (V(N)-2*int(V(N)/2+1e-6))>0.5,5,0)
+Bbit1 q1 0 V=if( (V(N)-4*int(V(N)/4+1e-6))>1.5,5,0)
+Bbit2 q2 0 V=if( (V(N)-8*int(V(N)/8+1e-6))>3.5,5,0)
+Bbit3 q3 0 V=if( (V(N)-16*int(V(N)/16+1e-6))>7.5,5,0)
+Bbit4 q4 0 V=if( (V(N)-32*int(V(N)/32+1e-6))>15.5,5,0)
+Bbit5 q5 0 V=if( (V(N)-64*int(V(N)/64+1e-6))>31.5,5,0)
+Bbit6 q6 0 V=if( (V(N)-128*int(V(N)/128+1e-6))>63.5,5,0)
+Bbit7 q7 0 V=if( (V(N)-256*int(V(N)/256+1e-6))>127.5,5,0)
+.ends
+
+* 4 bit ADC behavorial subcircuit
+.subckt ADC4 VIN VREF q0 q1 q2 q3 N
+B1 N 0 V=limit(0, int((V(VIN))/V(VREF)*16), 15)
+Bbit0 q0 0 V=if( (V(N)-2*int(V(N)/2+1e-6))>0.5,5,0)
+Bbit1 q1 0 V=if( (V(N)-4*int(V(N)/4+1e-6))>1.5,5,0)
+Bbit2 q2 0 V=if( (V(N)-8*int(V(N)/8+1e-6))>3.5,5,0)
+Bbit3 q3 0 V=if( (V(N)-16*int(V(N)/16+1e-6))>7.5,5,0)
+.ends
+
+* 8 bit DAC behavorial subcircuit
+.subckt DAC8 VOUT VREF q0 q1 q2 q3 q4 q5 q6 q7
+B1 VOUT 0 V={V(VREF)*(V(q0)+2*V(q1)+4*V(q2)+8*V(q3)+16*V(q4)+32*V(q5)+64*V(q6)+128*V(q7))/256/5}
+.ends
+
+* 4 bit DAC behavorial subcircuit
+.subckt DAC4 VOUT VREF q0 q1 q2 q3
+B1 VOUT 0 V={V(VREF)*(V(q0)+2*V(q1)+4*V(q2)+8*V(q3))/16/5}
+.ends
+

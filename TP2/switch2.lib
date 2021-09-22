@@ -1,0 +1,7 @@
+* 2 switch controlled by a digital input
+.subckt switch2 p1 p2 p3 bit
+b1 bitinv 0 V={5*inv(V(bit))}
+S1 p1 p2 bitinv 0 myswitch
+S2 p1 p3 bit 0 myswitch
+.model myswitch SW(RON=0.1 ROFF=1e12 Vt=2.5 Vh=0)
+.ends
